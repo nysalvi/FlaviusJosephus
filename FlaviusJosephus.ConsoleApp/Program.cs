@@ -14,32 +14,34 @@ namespace FlaviusJosephus.ConsoleApp
             int pessoas, tamanhoSalto;
             bool[] pessoasMortas;
 
-            string input;
+            char[] input;
 
             while (casosDeTestes > 0) {
                 Console.WriteLine("Digite a quantidade de pessoas no círculo e o tamanho do salto: ");
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToCharArray();
 
-                if (!int.TryParse(Console.ReadLine(), out pessoas) || pessoas < 1 || pessoas > 10000) {
-                    Console.WriteLine("Digite números entre 1 e 10000");
-                    continue;
-                }
-                if (!int.TryParse(Console.ReadLine(), out tamanhoSalto) || tamanhoSalto < 1 || tamanhoSalto > 1000) {
-                    Console.WriteLine("Digite números entre 1 e 1000");
-                    continue;
-                }
                 pessoasMortas = new bool[pessoas];
 
                 int contador = tamanhoSalto - 1;
-                while (true) {         
-                    
-                    if (pessoasMortas[0] == false)
+                int saltoAtual = 0;
+                pessoasMortas[contador] = true;
+
+                while (true) {
+                    if (pessoasMortas[contador] == false) {
+                        saltoAtual++;
+                    }
+                    if (saltoAtual == tamanhoSalto) {
                         pessoasMortas[contador] = true;
+                        saltoAtual = 0;
+                    }
                     if (contador + tamanhoSalto >= pessoasMortas.Length)
                         contador = tamanhoSalto - (pessoasMortas.Length - contador) - 1;
                     else 
-                        contador += tamanhoSalto;                        
-                   
+                        contador += tamanhoSalto;
+
+                    contador++;
+                    if (contador == pessoasMortas.Length)
+                        contador = 0;
                 }
 
                 casosDeTestes--;
